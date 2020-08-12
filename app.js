@@ -19,35 +19,40 @@ function onsubmit(s){
     }
 
 let users = [];
-let DeleteButton =  `<button id = 'remove'>Delete</button>`;
-let EditButton =   `<button id = 'edit'>Edit</button>`;
+let DeleteButton = `<button id = 'remove'>Delete</button>`;
+let EditButton =  `<button id = 'edit'>Edit</button>`;
 
 
 function addUser(){
-    let user = {
-        text : userInput.value,
-    }
-
+    createObject();
     users.push(user);
+    createList();
+    const liselect = document.querySelectorAll('li');
+    const edit = document.querySelectorAll('#edit');
+    const remove = document.querySelectorAll('#remove');
+    edit.onclick = editUser();
+
+    remove.onclick = deleteUser();
+
+    userInput.value = ''
+
+}
+
+
+function createObject(){
+    return user = { text : userInput.value}
+}
+function createList(){
     const li = document.createElement('li');
     li.appendChild(document.createTextNode(`${user.text}`));
     li.innerHTML += EditButton;
     li.innerHTML += DeleteButton;
     ul.appendChild(li);
-     
-    console.log(users)
+}
 
+function editUser(){
     const liselect = document.querySelectorAll('li');
     const edit = document.querySelectorAll('#edit');
-    const remove = document.querySelectorAll('#remove');
-
-    for(let i=0;i<users.length;i++){
-    remove[i].onclick = function(r){
-        liselect[i].remove();
-        users.splice(i,1)
-        }
-    }
-
     for(let i=0;i<users.length;i++){
         edit[i].onclick = function(){
             let editInput = document.createElement('input');
@@ -69,8 +74,15 @@ function addUser(){
 
         }
     }
+}
 
-
- userInput.value = ''
-
+function deleteUser(){
+    const remove = document.querySelectorAll('#remove');
+    const liselect = document.querySelectorAll('li');
+    for(let i=0;i<users.length;i++){
+        remove[i].onclick = function(r){
+            liselect[i].remove();
+            users.splice(i,1)
+            }
+        }
 }
